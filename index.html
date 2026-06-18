@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172f35">
+  <title>先知 · 十五问综合占测</title>
+  <style>
+    :root {
+      --ink: #183239;
+      --ink-soft: #365158;
+      --paper: #f5f0e5;
+      --paper-deep: #e9dfcc;
+      --gold: #a77a34;
+      --gold-light: #d9bd80;
+      --jade: #587b70;
+      --red: #a54a3f;
+      --white: #fffdf7;
+      --line: rgba(24, 50, 57, .16);
+      --shadow: 0 24px 70px rgba(25, 43, 45, .15);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(167, 122, 52, .13), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(88, 123, 112, .16), transparent 29%),
+        linear-gradient(145deg, #eee6d7 0%, #f8f4eb 48%, #e8e0d2 100%);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(24, 50, 57, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 50, 57, .04) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, #000, transparent 86%);
+    }
+
+    button { font: inherit; }
+
+    .shell {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .seal {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 15px;
+      background: var(--red);
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,.08);
+      font-family: "STKaiti", "KaiTi", serif;
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .brand-name {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 25px;
+      letter-spacing: .18em;
+    }
+
+    .brand-caption {
+      margin: 3px 0 0;
+      color: var(--ink-soft);
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    .status-chip {
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255,253,247,.55);
+      font-size: 12px;
+    }
+
+    .panel {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.68);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 247, .86);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      min-height: 580px;
+    }
+
+    .hero-copy {
+      padding: clamp(42px, 7vw, 76px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 20px 0 20px;
+      max-width: 650px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(42px, 6.2vw, 76px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -.045em;
+    }
+
+    .hero-lead {
+      max-width: 610px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .hero-notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 30px 0;
+    }
+
+    .hero-note {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      background: rgba(245, 240, 229, .68);
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 52px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    .primary-button {
+      color: var(--white);
+      background: var(--ink);
+      box-shadow: 0 13px 26px rgba(24,50,57,.20);
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .secondary-button {
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover { transform: translateY(-2px); }
+
+    .primary-button:focus-visible,
+    .secondary-button:focus-visible,
+    .option:focus-visible {
+      outline: 3px solid rgba(167,122,52,.32);
+      outline-offset: 3px;
+    }
+
+    .primary-button:disabled {
+      cursor: not-allowed;
+      opacity: .42;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .hero-oracle {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 580px;
+      overflow: hidden;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at center, rgba(217,189,128,.20), transparent 30%),
+        linear-gradient(150deg, #24454b, #122b31 72%);
+    }
+
+    .hero-oracle::before,
+    .hero-oracle::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(217,189,128,.22);
+      border-radius: 50%;
+    }
+
+    .hero-oracle::before {
+      width: 340px;
+      height: 340px;
+    }
+
+    .hero-oracle::after {
+      width: 245px;
+      height: 245px;
+    }
+
+    .oracle-mark {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .oracle-symbol {
+      display: block;
+      color: var(--gold-light);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 120px;
+      line-height: 1;
+      text-shadow: 0 12px 28px rgba(0,0,0,.24);
+    }
+
+    .oracle-small {
+      display: block;
+      margin-top: 20px;
+      color: rgba(255,253,247,.72);
+      font-size: 12px;
+      letter-spacing: .32em;
+    }
+
+    .disclaimer {
+      margin: 20px 0 0;
+      color: var(--ink-soft);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .quiz-panel { min-height: 650px; }
+
+    .quiz-head {
+      padding: 25px 34px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(245,240,229,.7);
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 14px;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(24,50,57,.10);
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--jade), var(--gold));
+      transition: width .35s ease;
+    }
+
+    .question-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(44px, 7vw, 74px) clamp(24px, 6vw, 64px) 38px;
+    }
+
+    .question-index {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+
+    .question-title {
+      min-height: 104px;
+      margin: 15px 0 30px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(27px, 4vw, 38px);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .options {
+      display: grid;
+      gap: 13px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 64px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      background: rgba(255,253,247,.72);
+      transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    .option:hover {
+      transform: translateX(3px);
+      border-color: rgba(167,122,52,.65);
+      background: var(--white);
+    }
+
+    .option.selected {
+      border-color: var(--gold);
+      background: #f2e8d3;
+      box-shadow: inset 0 0 0 1px rgba(167,122,52,.20);
+    }
+
+    .option-letter {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink-soft);
+      background: rgba(255,255,255,.55);
+      font-family: Georgia, serif;
+      font-size: 13px;
+    }
+
+    .option.selected .option-letter {
+      color: var(--white);
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .quiz-actions {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 6vw, 64px) 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .quiz-actions .primary-button { min-width: 145px; }
+
+    .loading-view {
+      min-height: 640px;
+      display: grid;
+      place-items: center;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 110px;
+      height: 110px;
+      position: relative;
+      margin: 0 auto 30px;
+      border: 1px solid rgba(167,122,52,.36);
+      border-radius: 50%;
+      animation: rotate 4s linear infinite;
+    }
+
+    .spinner::before,
+    .spinner::after {
+      content: "";
+      position: absolute;
+      inset: 17px;
+      border: 1px solid rgba(88,123,112,.42);
+      border-radius: 50%;
+    }
+
+    .spinner::after {
+      inset: 39px;
+      border: 0;
+      background: var(--gold);
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .loading-view h2 {
+      margin: 0 0 10px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 32px;
+    }
+
+    .loading-view p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .report {
+      overflow: visible;
+      background: var(--paper);
+    }
+
+    .report-cover {
+      position: relative;
+      min-height: 430px;
+      padding: clamp(45px, 8vw, 86px);
+      overflow: hidden;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 74% 48%, rgba(217,189,128,.18), transparent 25%),
+        linear-gradient(145deg, #1e4147, #122b31);
+    }
+
+    .report-cover::after {
+      content: attr(data-symbol);
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(217,189,128,.16);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: min(32vw, 330px);
+      line-height: 1;
+    }
+
+    .report-kicker {
+      position: relative;
+      z-index: 1;
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+
+    .report-title {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 20px 0 12px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(42px, 7vw, 72px);
+      font-weight: 600;
+      line-height: 1.14;
+    }
+
+    .report-subtitle {
+      position: relative;
+      z-index: 1;
+      max-width: 610px;
+      margin: 0;
+      color: rgba(255,253,247,.72);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .report-stamp {
+      position: relative;
+      z-index: 1;
+      margin-top: 45px;
+      color: rgba(255,253,247,.62);
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+
+    .report-body {
+      padding: clamp(30px, 6vw, 70px);
+    }
+
+    .verdict {
+      margin-top: -112px;
+      position: relative;
+      z-index: 2;
+      padding: clamp(28px, 5vw, 48px);
+      border: 1px solid rgba(167,122,52,.25);
+      border-radius: 22px;
+      background: var(--white);
+      box-shadow: 0 20px 50px rgba(25,43,45,.13);
+    }
+
+    .verdict-label {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    .verdict-text {
+      margin: 12px 0 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(23px, 3.5vw, 33px);
+      line-height: 1.65;
+    }
+
+    .element-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 34px 0 0;
+    }
+
+    .element {
+      padding: 15px 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      text-align: center;
+      background: rgba(245,240,229,.56);
+    }
+
+    .element-name {
+      display: block;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .element-value {
+      display: block;
+      margin-top: 4px;
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .report-section {
+      padding: 35px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .report-section:last-of-type { border-bottom: 0; }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 18px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 27px;
+    }
+
+    .section-number {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--ink);
+      font-family: Georgia, serif;
+      font-size: 12px;
+    }
+
+    .section-copy {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 2;
+    }
+
+    .fortune-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .fortune-card {
+      min-height: 210px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: rgba(255,253,247,.58);
+    }
+
+    .fortune-card h3 {
+      margin: 0 0 12px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 21px;
+    }
+
+    .fortune-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.85;
+    }
+
+    .fortune-score {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .advice-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .advice-box {
+      padding: 24px;
+      border-radius: 18px;
+    }
+
+    .advice-box.good { background: rgba(88,123,112,.11); }
+    .advice-box.avoid { background: rgba(165,74,63,.09); }
+
+    .advice-box h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+    }
+
+    .advice-box ul {
+      margin: 0;
+      padding-left: 1.2em;
+      color: var(--ink-soft);
+      line-height: 1.9;
+    }
+
+    .report-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 8px 0 4px;
+    }
+
+    .hidden { display: none !important; }
+
+    .fade-in { animation: fadeIn .5s ease both; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 20px, 1080px); padding-top: 16px; }
+      .brand { margin-bottom: 16px; }
+      .status-chip { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 42px 28px; }
+      .hero-oracle { min-height: 310px; }
+      .oracle-symbol { font-size: 88px; }
+      .quiz-head { padding: 21px 22px 18px; }
+      .question-title { min-height: 130px; }
+      .quiz-actions { padding-bottom: 30px; }
+      .report-cover { min-height: 390px; }
+      .verdict { margin-top: -74px; }
+      .element-grid { grid-template-columns: repeat(5, minmax(52px, 1fr)); gap: 6px; }
+      .element { padding: 12px 4px; }
+      .element-name { font-size: 18px; }
+      .fortune-grid, .advice-columns { grid-template-columns: 1fr; }
+      .report-actions { flex-direction: column; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      body::before, .brand, .report-actions { display: none !important; }
+      .shell { width: 100%; padding: 0; }
+      .panel { box-shadow: none; border: 0; }
+      .report-cover { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .fortune-card, .verdict, .advice-box { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="brand">
+      <div class="brand-lockup">
+        <div class="seal" aria-hidden="true">知</div>
+        <div>
+          <p class="brand-name">先知</p>
+          <p class="brand-caption">综合命势占测</p>
+        </div>
+      </div>
+      <div class="status-chip">每轮随机抽取 15 问</div>
+    </header>
+
+    <section id="startView" class="panel hero fade-in">
+      <div class="hero-copy">
+        <div class="eyebrow">十五问 · 观当下 · 察来势</div>
+        <h1>回答十五问，生成你的综合命势报告</h1>
+        <p class="hero-lead">
+          题目会从不同生活情境中随机抽取。请凭第一直觉作答，系统将据此推演五行气势、近期转折，以及感情、事业、财运与身心状态。
+        </p>
+        <div class="hero-notes" aria-label="占测特点">
+          <span class="hero-note">每次题目不同</span>
+          <span class="hero-note">约 3 分钟</span>
+          <span class="hero-note">即时生成结论</span>
+        </div>
+        <div>
+          <button id="startButton" class="primary-button" type="button">开始占测</button>
+        </div>
+        <p class="disclaimer">本占测用于传统文化娱乐与自我观察。关于医疗、投资或法律的重要决定，请以现实证据和专业意见为准。</p>
+      </div>
+      <div class="hero-oracle" aria-hidden="true">
+        <div class="oracle-mark">
+          <span class="oracle-symbol">易</span>
+          <span class="oracle-small">万 象 由 心 起</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="quizView" class="panel quiz-panel hidden" aria-live="polite">
+      <div class="quiz-head">
+        <div class="quiz-meta">
+          <span id="progressText">第 1 / 15 问</span>
+          <span>凭第一直觉选择</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="question-wrap">
+        <div id="questionIndex" class="question-index">QUESTION 01</div>
+        <h2 id="questionTitle" class="question-title"></h2>
+        <div id="options" class="options" role="radiogroup" aria-labelledby="questionTitle"></div>
+      </div>
+
+      <div class="quiz-actions">
+        <button id="backButton" class="secondary-button" type="button">上一问</button>
+        <button id="nextButton" class="primary-button" type="button" disabled>下一问</button>
+      </div>
+    </section>
+
+    <section id="loadingView" class="panel loading-view hidden" aria-live="polite">
+      <div>
+        <div class="spinner" aria-hidden="true"></div>
+        <h2>正在观势成象</h2>
+        <p>汇合十五问的取向，推演你的当前命势……</p>
+      </div>
+    </section>
+
+    <article id="reportView" class="panel report hidden" aria-live="polite">
+      <header id="reportCover" class="report-cover" data-symbol="吉">
+        <div class="report-kicker">先知 · 十五问综合占测</div>
+        <h1 id="reportTitle" class="report-title">命势报告</h1>
+        <p id="reportSubtitle" class="report-subtitle"></p>
+        <div id="reportStamp" class="report-stamp"></div>
+      </header>
+
+      <div class="report-body">
+        <section class="verdict">
+          <div class="verdict-label">命势总论</div>
+          <p id="verdictText" class="verdict-text"></p>
+          <div id="elementGrid" class="element-grid" aria-label="五行气势"></div>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">一</span>命格主象</h2>
+          <p id="natureText" class="section-copy"></p>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">二</span>近期运程</h2>
+          <p id="timingText" class="section-copy"></p>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">三</span>四域命势</h2>
+          <div id="fortuneGrid" class="fortune-grid"></div>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">四</span>转机与提醒</h2>
+          <p id="turningText" class="section-copy"></p>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">五</span>未来三日关键事件预测</h2>
+          <div id="forecastGrid" class="fortune-grid"></div>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">六</span>今日宜忌</h2>
+          <div class="advice-columns">
+            <div class="advice-box good">
+              <h3>宜</h3>
+              <ul id="goodList"></ul>
+            </div>
+            <div class="advice-box avoid">
+              <h3>忌</h3>
+              <ul id="avoidList"></ul>
+            </div>
+          </div>
+        </section>
+
+        <div class="report-actions">
+          <button id="restartButton" class="primary-button" type="button">重新占测</button>
+          <button id="printButton" class="secondary-button" type="button">打印 / 保存报告</button>
+        </div>
+        <p class="disclaimer">结果反映你本轮作答所呈现的心理与行动趋势，并非不可改变的宿命。健康部分不构成诊断，财运部分不构成投资建议。</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const E = Object.freeze({ WOOD: "木", FIRE: "火", EARTH: "土", METAL: "金", WATER: "水" });
+    const makeOptions = (texts, elements, energies = [1, 1, -1, -1], tones = ["open", "active", "steady", "cautious"]) =>
+      texts.map((text, i) => ({ text, element: elements[i], energy: energies[i], tone: tones[i] }));
+
+    const questionBank = [
+      { q: "当一件重要的事突然出现变数，你最先会怎么做？", o: makeOptions(["立刻寻找新的可能", "马上行动抢回主动", "先稳住局面再判断", "退一步观察风险"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "最近哪一种感受最常在你心里出现？", o: makeOptions(["想开始一件新事", "想证明自己", "想把生活安定下来", "想独处并理清思绪"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "面对一个并不熟悉的人，你通常更像哪一种状态？", o: makeOptions(["自然打开话题", "热情直接地靠近", "礼貌而稳妥", "先观察再决定距离"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "如果获得三天空白时间，你最想如何安排？", o: makeOptions(["学习或探索新地方", "参加热闹活动", "整理家和生活", "安静休息或独处"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "你目前最希望命运替你打开哪一扇门？", o: makeOptions(["成长与新机会", "名望与突破", "稳定与积累", "答案与内心平静"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "遇到意见冲突时，你更容易采取哪种方式？", o: makeOptions(["寻找双方都能接受的新路", "把真实想法直接说清", "维持关系与整体稳定", "暂时离开，等情绪平复"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "你最容易被哪一种人吸引？", o: makeOptions(["有想象力、不断成长的人", "热烈、自信、有感染力的人", "可靠、温和、有责任感的人", "冷静、神秘、思想很深的人"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "一项任务迟迟没有进展，你更可能因为什么？", o: makeOptions(["方向太多难以取舍", "开始太快后来失去耐心", "责任太多不愿放下", "顾虑风险而反复思考"], [E.WOOD,E.FIRE,E.EARTH,E.METAL], [1,1,-1,-1], ["scattered","impulsive","burdened","cautious"]) },
+      { q: "现在的你更需要哪一种力量？", o: makeOptions(["生长", "勇气", "安定", "清醒"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "别人通常会怎样评价你？", o: makeOptions(["有创意、好奇", "有行动力、鲜明", "可靠、顾全大局", "理性、有原则"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "当你想到未来一年，脑海里首先出现什么画面？", o: makeOptions(["一条正在延伸的道路", "一场等待登场的盛会", "一座逐渐建稳的房子", "一片需要看清方向的水面"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "如果必须放弃一样东西，你更愿意放弃什么？", o: makeOptions(["熟悉但停滞的环境", "别人对你的期待", "短暂的刺激和热闹", "无法确认的机会"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你做重要决定时最相信什么？", o: makeOptions(["未来潜力", "当下直觉", "过往经验", "事实与逻辑"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "最近的人际关系更像哪一种天气？", o: makeOptions(["春风，有新连接", "烈日，热烈也容易摩擦", "多云，平稳但略显沉闷", "夜雨，有些话尚未说开"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "你最希望别人真正理解你的哪一面？", o: makeOptions(["心里的理想", "外表下的热情", "默默承担的责任", "没有说出口的感受"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "面对金钱，你目前更接近哪一种状态？", o: makeOptions(["愿意投入学习和未来", "容易为体验和快乐买单", "重视储蓄与长期安全", "谨慎观望，害怕判断失误"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "最近你的精力更像什么？", o: makeOptions(["缓慢回升的嫩芽", "忽明忽暗的火焰", "稳定但沉重的土地", "需要补充的深水"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "如果收到一个意外邀约，你通常会？", o: makeOptions(["好奇地了解细节", "很快答应", "先看是否影响原计划", "倾向婉拒以免失控"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你目前最想整理的是哪一部分？", o: makeOptions(["未来方向", "情绪和表达", "家庭与日常秩序", "关系边界"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "哪一句话最接近你当下的处境？", o: makeOptions(["旧路已经容不下新的我", "机会就在眼前但需要一跃", "一切正在变稳，只是速度很慢", "答案尚未浮出水面"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "当别人需要帮助时，你通常怎么回应？", o: makeOptions(["帮对方看见新方法", "马上出手解决", "持续陪伴直到安稳", "先判断边界与责任"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你最不喜欢哪一种环境？", o: makeOptions(["没有成长空间", "沉闷而缺少回应", "变化太快、没有秩序", "人情复杂、边界模糊"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "如果生活是一盘棋，你目前更像在做什么？", o: makeOptions(["开拓新的棋路", "主动进攻", "巩固已有阵地", "等待对方露出破绽"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "对于一段已经消耗你的关系，你更可能？", o: makeOptions(["尝试改变相处方式", "直接说出不满", "因为责任继续维持", "逐渐拉开距离"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你最近的睡前思绪通常围绕什么？", o: makeOptions(["明天还可以做什么", "今天有没有错过机会", "尚未完成的责任", "某段关系或未知结果"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "一项长期计划最吸引你的部分是什么？", o: makeOptions(["看见自己不断成长", "抵达高峰的成就感", "逐步积累的安全感", "掌控节奏和减少风险"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "最近你更容易在哪个时刻感到满足？", o: makeOptions(["学会新东西时", "得到肯定时", "照顾好生活时", "终于想明白一件事时"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "你心中的“好运”更像什么？", o: makeOptions(["遇见新的可能", "关键时刻被看见", "所有付出稳稳落地", "避开错误并得到答案"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "如果必须在本月完成一件事，你会选择？", o: makeOptions(["开始一个新计划", "争取一次重要机会", "解决积压的现实问题", "结束一件长期困扰"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你的内在节奏更接近哪一种？", o: makeOptions(["不断向外生长", "快速升温又快速转换", "缓慢但持续", "潮汐般时进时退"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "你希望未来的伴侣或关系带给你什么？", o: makeOptions(["共同成长", "激情与回应", "陪伴与安稳", "理解与精神交流"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "当工作获得成绩，你最看重什么？", o: makeOptions(["能力得到拓展", "影响力得到认可", "生活因此更稳定", "方法更清晰、更有效率"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "面对一笔额外收入，你更可能？", o: makeOptions(["投入学习或新项目", "奖励自己一次", "存起来增加安全感", "先研究如何配置"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "哪一种声音最容易压住你的直觉？", o: makeOptions(["机会太多造成的杂音", "想立即证明自己的冲动", "对责任和稳定的担忧", "害怕做错的理性分析"], [E.WOOD,E.FIRE,E.EARTH,E.METAL], [-1,-1,-1,-1], ["scattered","impulsive","burdened","cautious"]) },
+      { q: "如果现在需要一次改变，你希望它从哪里发生？", o: makeOptions(["学习与视野", "表达与行动", "生活结构", "认知与边界"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "最近你对自己的评价更接近哪一句？", o: makeOptions(["我正在变成新的自己", "我有力量，只差一个时机", "我已经做了很多，需要沉淀", "我需要更清楚地知道自己要什么"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "遇到好消息时，你通常会？", o: makeOptions(["想到下一步可能性", "立刻与人分享", "先确认它是否稳妥", "保持冷静避免期待过高"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你觉得目前最大的隐形阻力是什么？", o: makeOptions(["方向分散", "急于求成", "背负过多", "防备过强"], [E.WOOD,E.FIRE,E.EARTH,E.METAL], [-1,-1,-1,-1], ["scattered","impulsive","burdened","cautious"]) },
+      { q: "当你真正放松下来，最想做什么？", o: makeOptions(["走出去看看", "尽情表达或创造", "吃顿好饭、睡个好觉", "阅读、听音乐或发呆"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "哪一种变化最容易令你不安？", o: makeOptions(["失去成长可能", "失去关注和回应", "失去稳定基础", "失去控制和边界"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "如果今天只能给自己一句提醒，你会选？", o: makeOptions(["向前一步", "勇敢表达", "慢一点也没关系", "看清再决定"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "你近期更期待哪一种相遇？", o: makeOptions(["带来新视野的人", "让你心动的人", "值得长期信任的人", "能理解你沉默的人"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) },
+      { q: "现在的事业状态更像什么？", o: makeOptions(["枝条正在寻找方向", "火候将到，等待突破", "地基正在变稳", "需要删减与重新聚焦"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "面对未知，你最常用什么保护自己？", o: makeOptions(["准备更多选择", "抢先采取行动", "依靠熟悉的人与习惯", "设定规则并保持距离"], [E.WOOD,E.FIRE,E.EARTH,E.METAL]) },
+      { q: "此刻你最想听见命运对你说什么？", o: makeOptions(["新的路已经出现", "轮到你发光了", "你的积累没有白费", "答案会在安静中浮现"], [E.WOOD,E.FIRE,E.EARTH,E.WATER]) }
+    ];
+
+    const elementProfiles = {
+      [E.WOOD]: {
+        title: "木旺生发",
+        symbol: "生",
+        nature: "你的主气属木，内在动力来自成长、探索与打开新局。你不是适合长期困在旧框架里的人；当环境允许学习、流动和创造时，运势会明显抬升。木旺之人也容易同时伸出太多枝条，近期真正的课题是保留一条主线，让变化长成结果。",
+        verdict: "新机已动，旧局渐松。眼下不是停守到底的时候，而是选择一条值得持续生长的路。",
+        good: ["开始长期学习或新计划", "接触新的环境与人", "把目标缩减为一条主线"],
+        avoid: ["同时开启过多事项", "因新鲜感频繁换方向", "只构想而迟迟不落地"]
+      },
+      [E.FIRE]: {
+        title: "火明势起",
+        symbol: "明",
+        nature: "你的主气属火，当前命势需要通过表达、行动和被看见而流动。你有把局面点亮的能力，越是主动回应机会，越容易得到反馈。但火势过急时，也会把耐心和关系中的细节烧掉。未来的好运不在于更用力，而在于把热度维持得更久。",
+        verdict: "气势正在升温，机会多从主动表达与关键亮相中出现；稳住节奏，方能由一时之盛变成长久之势。",
+        good: ["主动提出请求与想法", "完成一次公开表达", "把热情变成可持续安排"],
+        avoid: ["情绪上头时作重大决定", "急于获得即时回应", "用强势代替清晰"]
+      },
+      [E.EARTH]: {
+        title: "土厚运稳",
+        symbol: "定",
+        nature: "你的主气属土，当前命势以积累、责任和稳定为核心。你拥有承接复杂局面的能力，许多好运并非突然降临，而是过去的投入逐渐显形。土气偏重也意味着你容易替别人承担太多，或因为求稳而错过必要变化。真正的转机来自先稳住根基，再为自己腾出空间。",
+        verdict: "运势看似缓慢，实则根基渐成。眼前宜收拢、整顿与积累，成果将在稳定之后集中显现。",
+        good: ["整理财务与生活秩序", "完成积压事项", "为长期目标建立固定节奏"],
+        avoid: ["替所有人承担责任", "因求稳拒绝合理变化", "把疲惫误认为必须坚持"]
+      },
+      [E.METAL]: {
+        title: "金清局明",
+        symbol: "决",
+        nature: "你的主气属金，当前命势正在要求你做减法、立边界并看清真正重要的事。你有较强的判断和纠偏能力，越能剔除模糊承诺与无效消耗，运势越顺。金气过强时会表现为过度防备或对自己太苛刻；好的决断应当让生命更轻，而不是更紧。",
+        verdict: "去芜存真，局面方明。近期最大的好运来自一次清楚的取舍，以及对边界和标准的重新确认。",
+        good: ["结束无效消耗", "明确合作与关系边界", "用事实校正长期猜测"],
+        avoid: ["追求完美而错过时机", "把谨慎变成拒绝", "以冷静掩盖真实需要"]
+      },
+      [E.WATER]: {
+        title: "水深智生",
+        symbol: "悟",
+        nature: "你的主气属水，直觉、洞察与内在感受正在主导这一阶段。表面看似没有剧烈变化，深处却在完成一次方向重组。你需要安静和留白才能听见真正答案。水势偏重时容易反复揣测、迟迟不动；转运之法是把直觉变成一个可以验证的小行动。",
+        verdict: "静水之下已有暗流转向。答案并非没有出现，而是需要减少外界杂音，再以小步行动验证。",
+        good: ["安排独处与深度思考", "记录直觉并做现实验证", "与可信的人谈清隐忧"],
+        avoid: ["长期沉浸在猜测中", "把沉默当成唯一保护", "在信息不足时预设最坏结果"]
+      }
+    };
+
+    const domainCopy = {
+      love: {
+        [E.WOOD]: "感情中有新的生长迹象。单身者容易因学习、工作变化或新社群结识有共同目标的人；有伴者适合共同规划下一阶段。需要留意的是，不要只追求关系的新鲜感，而忽略持续投入。",
+        [E.FIRE]: "感情热度较高，吸引与回应会变得明显。主动表达有利，但也容易因急于确认而制造压力。把真实需求说清，比反复试探更能推动关系。",
+        [E.EARTH]: "感情走向重在稳定与信任。已有关系适合处理现实安排；单身者更容易被可靠、长期可相处的人吸引。别让照顾别人变成忽略自己。",
+        [E.METAL]: "关系将迎来一次边界或定义上的厘清。不合适的互动会自然降温，真诚可靠的关系反而更加清楚。避免用冷处理代替沟通。",
+        [E.WATER]: "情感深处有未说出口的部分。近期直觉敏锐，但不宜凭感觉替对方下结论。一次安静而坦率的谈话，会比猜测带来更多答案。"
+      },
+      career: {
+        [E.WOOD]: "事业正处于扩展期，适合学习新能力、接触新领域或启动长期项目。机会未必立刻兑现，但会成为后续增长的入口。聚焦比广撒网更重要。",
+        [E.FIRE]: "事业有被看见和突破的机会，尤其利于展示、谈判、提案与争取资源。切忌因一时顺势承诺过多，先确认自己能否持续交付。",
+        [E.EARTH]: "事业运来自稳扎稳打。过去的积累开始形成信任或责任升级，也可能伴随更重任务。应主动谈清资源与回报，不要只默默承担。",
+        [E.METAL]: "事业进入调整与筛选期，适合梳理职责、停止低价值工作、重订标准。一次明确的拒绝或取舍，可能为真正重要的机会腾出位置。",
+        [E.WATER]: "事业方向尚在酝酿，幕后研究、策略规划和深度工作比仓促亮相更有利。暂时的不确定并非停滞，但需要给思考设定截止日期。"
+      },
+      wealth: {
+        [E.WOOD]: "财运偏向长期成长，适合把资源投入学习、工具与可积累能力。短期进出可能增加，重点不是马上获利，而是判断这笔投入能否形成未来价值。",
+        [E.FIRE]: "财运有活跃迹象，也容易因社交、体验或冲动而扩大支出。靠表现和行动争取收入较有利，但不宜追逐快速回报或高风险机会。",
+        [E.EARTH]: "财运以守成为主，储蓄、预算和稳定现金流会带来安全感。适合处理长期账务与现实资产，不宜因人情压力承担超出能力的支出。",
+        [E.METAL]: "财运需要做减法和审查。清理订阅、模糊账目或无效投入会立刻改善局面。任何投资决定都应以充分信息和专业意见为准。",
+        [E.WATER]: "财务信息仍不完全，宜观察、研究并保留流动性。可能有隐藏成本或延迟到账情况，重要决定不必急于一时。"
+      },
+      vitality: {
+        [E.WOOD]: "精力需要通过规律活动和接触自然流动起来。久坐、压抑或长期没有变化会让你更疲惫。适合循序恢复，不宜突然设定过高强度。",
+        [E.FIRE]: "精力有冲高后回落的倾向，注意睡眠、情绪兴奋和过度安排。维持稳定节奏比短时间爆发更重要；不适请及时咨询专业人员。",
+        [E.EARTH]: "身体更需要休息、规律饮食和减少负担。疲惫可能来自长期承担而非能力不足。把恢复写进日程，会比靠意志硬撑有效。",
+        [E.METAL]: "身心需要清爽的边界和呼吸空间。减少信息噪音、整理环境、保持规律有助恢复。健康疑虑应交由合格专业人员判断。",
+        [E.WATER]: "精力偏内收，睡眠和情绪波动值得温和关注。留出安静时间有利，但不要长期封闭自己；持续不适请寻求专业支持。"
+      }
+    };
+
+    const timingTemplates = {
+      [E.WOOD]: "未来四至八周，先出现的是信息、人脉或新想法，随后才是明确结果。{secondary}气相助时，关键在于把第一个可行机会做深，而不是等待完美入口。",
+      [E.FIRE]: "未来三至六周是气势较强的窗口，容易出现需要你公开回应、争取或决定的时刻。{secondary}气相随，越能控制节奏，越能把短期亮点变成稳定进展。",
+      [E.EARTH]: "未来六至十二周属于由慢转稳的阶段。前半段重在收尾和整理，后半段更容易看到回报。{secondary}气相辅，务实安排会比追赶速度带来更多好运。",
+      [E.METAL]: "未来一个月会有一次明显的筛选、拒绝或重新定义。它表面像失去，实则在腾出空间。{secondary}气相合，决定一旦清楚，局势会迅速变轻。",
+      [E.WATER]: "未来四至十周是先静后动的走势。答案会通过重复出现的信息、梦境般的直觉或一次深入对话逐渐清楚。{secondary}气相承，最终仍需用现实行动确认。"
+    };
+
+    const turningTemplates = {
+      open: "你的转机来自一次主动打开：去见新人、接触新信息，或允许原计划出现新的走法。真正有价值的机会不会只让你兴奋，也会让你愿意持续投入。",
+      active: "你的转机来自明确表达和及时行动。近期若有一件事反复让你想“再等等”，它很可能正需要一个小而直接的推进。",
+      steady: "你的转机藏在秩序里。整理时间、钱和责任分配之后，原本模糊的问题会突然变得容易处理。",
+      cautious: "你的转机来自看清边界并结束消耗。不是所有退让都叫谨慎，有时明确说“不”才是运势回升的起点。",
+      scattered: "当前阻力是方向过多。未来最重要的不是寻找更多可能，而是选定一个目标连续推进二十一天。",
+      impulsive: "当前阻力是节奏过快。任何让你立刻兴奋或焦虑的决定，都值得隔一夜再确认。",
+      burdened: "当前阻力是承担过多。你需要区分责任、情分和习惯，不再替别人完成他们应当承担的部分。"
+    };
+
+    const eventForecasts = {
+      [E.WOOD]: [
+        { domain: "消息与机会", event: "一条新消息、临时邀请或陌生人的联系，会打开原本没有考虑过的路径。", sign: "同一主题在一天内重复出现两次，或有人主动询问你的计划。", action: "先了解细节，不必立刻承诺；记录其中最具长期价值的一项。" },
+        { domain: "人际与关系", event: "一次轻松对话可能迅速拉近距离，或让停滞的关系出现新的相处方式。", sign: "对方主动分享未来安排，或谈话自然延伸到共同兴趣。", action: "表达好奇，但不要急着定义关系，让连接自然生长。" },
+        { domain: "事业与方向", event: "工作或个人计划出现一个需要学习、调整方向的小转折，它会影响后续数周。", sign: "旧方法突然行不通，或你收到关于课程、工具、职位的信息。", action: "选择一个方向试行七天，避免同时铺开多个新项目。" }
+      ],
+      [E.FIRE]: [
+        { domain: "表现与认可", event: "你容易在公开表达、会议、社交或作品展示中被注意，并收到直接反馈。", sign: "有人临时请你发言、做决定，或对你的能力表达肯定。", action: "主动接住机会，但只承诺自己确实能完成的部分。" },
+        { domain: "关系与情绪", event: "一段关系的热度明显升高，可能是心动、重逢，也可能是一次需要说开的摩擦。", sign: "消息往来突然变密，或某个久未讨论的话题被重新提起。", action: "说真实需要，不用试探和激将来换取回应。" },
+        { domain: "行动与突破", event: "一件拖延的事会因外部催促或突发动力而快速推进，形成短期突破。", sign: "出现明确截止时间、关键人物回应，或你突然产生强烈行动意愿。", action: "先完成最关键的百分之二十，给后续修正留余地。" }
+      ],
+      [E.EARTH]: [
+        { domain: "现实事务", event: "一个拖延已久的生活、家庭或工作事项会得到落实，局面比预期更稳。", sign: "收到确认、到账、排期或正式答复，或有人开始承担具体责任。", action: "把口头约定写清楚，并完成最后一个收尾动作。" },
+        { domain: "财务与资源", event: "会出现一笔必要支出、延迟款项或资源重新分配，金额未必大，却会改变你的安全感。", sign: "账单、报销、续费或家庭支出被集中提起。", action: "先核对数字和期限，不因人情压力做超出预算的承诺。" },
+        { domain: "关系与承诺", event: "某个人会用行动而非言语表达可靠，或一段关系需要讨论更现实的安排。", sign: "对方主动处理细节、兑现旧承诺，或与你谈及时间和责任分配。", action: "看行动的持续性，也把自己的承受边界说出来。" }
+      ],
+      [E.METAL]: [
+        { domain: "取舍与决定", event: "一项合作、关系或计划将出现明确的继续／停止信号，你会因此减少一项消耗。", sign: "对方给出清楚答复，或某个反复问题终于暴露关键事实。", action: "依据事实决定，不为维持表面和谐拖延必要取舍。" },
+        { domain: "规则与文件", event: "合同、申请、流程、账号或重要资料可能需要修订确认，处理后会解除后续阻碍。", sign: "收到补充材料、修改要求、截止提醒或权限变动。", action: "逐项核对细节，重要内容保留书面记录。" },
+        { domain: "边界与关系", event: "你可能拒绝一个不合适的请求，或与某人重新划定相处边界，短暂紧张后反而更轻松。", sign: "同一请求再次出现，或你的身体先于语言感到抗拒。", action: "简短、清楚、温和地表达，不需要过度解释。" }
+      ],
+      [E.WATER]: [
+        { domain: "隐情与答案", event: "一个此前信息不足的问题会浮现新线索，可能来自私下对话、旧记录或意外听到的消息。", sign: "有人说出过去没提过的细节，或两条看似无关的信息突然连起来。", action: "先验证再判断，不把第一种解释当成全部真相。" },
+        { domain: "梦境与直觉", event: "你会对某个人或某件事产生格外清晰的直觉，并在当天看到一个现实呼应。", sign: "醒来后仍记得鲜明梦境，或某个念头反复安静地出现。", action: "把直觉写下来，用一个低风险行动验证，而非直接下结论。" },
+        { domain: "节奏与休整", event: "原定安排可能暂缓、取消或改变顺序，这会意外腾出处理内在问题的空间。", sign: "对方改期、交通延迟，或你明显感觉精力需要回收。", action: "不要强行填满空白；优先休息并处理最需要安静完成的事。" }
+      ]
+    };
+
+    const state = {
+      questions: [],
+      answers: [],
+      current: 0,
+      seed: 0
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const views = ["startView", "quizView", "loadingView", "reportView"];
+
+    function showView(id) {
+      views.forEach(view => $(view).classList.toggle("hidden", view !== id));
+      $(id).classList.remove("fade-in");
+      requestAnimationFrame(() => $(id).classList.add("fade-in"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function shuffle(items) {
+      const copy = [...items];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const random = crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+        const j = Math.floor(random * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function startQuiz() {
+      state.questions = shuffle(questionBank).slice(0, 15).map(item => ({
+        q: item.q,
+        o: shuffle(item.o)
+      }));
+      state.answers = Array(15).fill(null);
+      state.current = 0;
+      state.seed = crypto.getRandomValues(new Uint32Array(1))[0];
+      renderQuestion();
+      showView("quizView");
+    }
+
+    function renderQuestion() {
+      const item = state.questions[state.current];
+      const selected = state.answers[state.current];
+      const number = state.current + 1;
+      $("progressText").textContent = `第 ${number} / 15 问`;
+      $("progressBar").style.width = `${(number / 15) * 100}%`;
+      $("questionIndex").textContent = `QUESTION ${String(number).padStart(2, "0")}`;
+      $("questionTitle").textContent = item.q;
+      $("options").innerHTML = "";
+
+      item.o.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `option${selected === index ? " selected" : ""}`;
+        button.setAttribute("role", "radio");
+        button.setAttribute("aria-checked", selected === index ? "true" : "false");
+        button.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span><span>${option.text}</span>`;
+        button.addEventListener("click", () => {
+          state.answers[state.current] = index;
+          renderQuestion();
+          if (state.current < 14) {
+            setTimeout(() => {
+              state.current += 1;
+              renderQuestion();
+            }, 190);
+          }
+        });
+        $("options").appendChild(button);
+      });
+
+      $("backButton").disabled = state.current === 0;
+      $("backButton").style.visibility = state.current === 0 ? "hidden" : "visible";
+      $("nextButton").disabled = selected === null;
+      $("nextButton").textContent = state.current === 14 ? "生成命势报告" : "下一问";
+    }
+
+    function selectedOptions() {
+      return state.answers.map((answerIndex, questionIndex) => state.questions[questionIndex].o[answerIndex]);
+    }
+
+    function hashAnswers(options) {
+      let hash = state.seed >>> 0;
+      options.forEach((option, i) => {
+        const text = `${option.element}-${option.tone}-${i}`;
+        for (let j = 0; j < text.length; j++) {
+          hash = Math.imul(hash ^ text.charCodeAt(j), 2654435761) >>> 0;
+        }
+      });
+      return hash >>> 0;
+    }
+
+    function choose(list, hash, offset = 0) {
+      return list[(hash + offset * 2654435761) % list.length];
+    }
+
+    function calculateReport() {
+      const options = selectedOptions();
+      const scores = { [E.WOOD]: 0, [E.FIRE]: 0, [E.EARTH]: 0, [E.METAL]: 0, [E.WATER]: 0 };
+      const tones = {};
+      let yang = 0;
+      options.forEach(option => {
+        scores[option.element] += 3;
+        yang += option.energy;
+        tones[option.tone] = (tones[option.tone] || 0) + 1;
+      });
+
+      const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const dominant = ranked[0][0];
+      const secondary = ranked[1][0];
+      const weakest = ranked[ranked.length - 1][0];
+      const topTone = Object.entries(tones).sort((a, b) => b[1] - a[1])[0][0];
+      const hash = hashAnswers(options);
+      const profile = elementProfiles[dominant];
+      const phase = yang >= 5 ? "阳势渐起" : yang <= -5 ? "阴势内收" : "阴阳相济";
+      const percentBase = Object.fromEntries(ranked.map(([key, value]) => [key, Math.round((value / 45) * 100)]));
+
+      return {
+        hash,
+        scores,
+        percentBase,
+        dominant,
+        secondary,
+        weakest,
+        topTone,
+        phase,
+        profile,
+        domainScores: {
+          love: 62 + (hash % 24),
+          career: 64 + ((hash >>> 4) % 23),
+          wealth: 58 + ((hash >>> 8) % 24),
+          vitality: 60 + ((hash >>> 12) % 22)
+        }
+      };
+    }
+
+    function renderReport(report) {
+      const { dominant, secondary, weakest, profile, hash } = report;
+      const date = new Intl.DateTimeFormat("zh-CN", {
+        year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"
+      }).format(new Date());
+
+      $("reportCover").dataset.symbol = profile.symbol;
+      $("reportTitle").textContent = `${profile.title} · ${report.phase}`;
+      $("reportSubtitle").textContent = `本轮主气为${dominant}，辅气为${secondary}，${weakest}气相对收敛。命势关键词：${choose(["开局、聚焦、回响", "取舍、沉淀、转机", "清醒、行动、落地", "边界、节奏、积累"], hash)}。`;
+      $("reportStamp").textContent = `${date} · 占测编号 XZ-${String(hash).slice(-8)}`;
+      $("verdictText").textContent = profile.verdict;
+
+      const elementOrder = [E.WOOD, E.FIRE, E.EARTH, E.METAL, E.WATER];
+      $("elementGrid").innerHTML = elementOrder.map(element => `
+        <div class="element">
+          <span class="element-name">${element}</span>
+          <span class="element-value">${report.percentBase[element]}%</span>
+        </div>
+      `).join("");
+
+      $("natureText").textContent = `${profile.nature} 辅气属${secondary}，说明你并非只靠一种力量前行：${secondary}气会在关键阶段帮助主气完成落地。相对较弱的${weakest}气，则提示你近期需要主动补足与它相关的品质，而不是把短板视作宿命。`;
+      $("timingText").textContent = timingTemplates[dominant].replace("{secondary}", secondary);
+      $("turningText").textContent = turningTemplates[report.topTone] || turningTemplates.steady;
+
+      const cards = [
+        ["感情", domainCopy.love[dominant], report.domainScores.love],
+        ["事业", domainCopy.career[dominant], report.domainScores.career],
+        ["财运", domainCopy.wealth[dominant], report.domainScores.wealth],
+        ["身心", domainCopy.vitality[dominant], report.domainScores.vitality]
+      ];
+      $("fortuneGrid").innerHTML = cards.map(([title, text, score]) => `
+        <section class="fortune-card">
+          <h3>${title}</h3>
+          <p>${text}</p>
+          <div class="fortune-score">趋势指数 ${score} / 100</div>
+        </section>
+      `).join("");
+
+      const forecastElements = [dominant, secondary, dominant];
+      const usedForecasts = new Set();
+      const dayNames = ["第一日", "第二日", "第三日"];
+      const dayFormat = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric", weekday: "short" });
+      const forecasts = forecastElements.map((element, index) => {
+        const pool = eventForecasts[element];
+        let choiceIndex = (hash + index * 7 + report.scores[element]) % pool.length;
+        let key = `${element}-${choiceIndex}`;
+        while (usedForecasts.has(key)) {
+          choiceIndex = (choiceIndex + 1) % pool.length;
+          key = `${element}-${choiceIndex}`;
+        }
+        usedForecasts.add(key);
+        const date = new Date();
+        date.setDate(date.getDate() + index + 1);
+        return {
+          ...pool[choiceIndex],
+          date: dayFormat.format(date),
+          dayName: dayNames[index],
+          probability: 66 + ((hash >>> (index * 5)) % 24)
+        };
+      });
+      $("forecastGrid").innerHTML = forecasts.map(item => `
+        <section class="fortune-card">
+          <h3>${item.dayName} · ${item.date}</h3>
+          <p><strong>${item.domain}：</strong>${item.event}</p>
+          <p style="margin-top:10px"><strong>应验征兆：</strong>${item.sign}</p>
+          <p style="margin-top:10px"><strong>趋吉提示：</strong>${item.action}</p>
+          <div class="fortune-score">事件显化指数 ${item.probability} / 100</div>
+        </section>
+      `).join("");
+
+      const extraGood = {
+        [E.WOOD]: `用${weakest}气的方式检查计划`,
+        [E.FIRE]: "把重要表达提前准备",
+        [E.EARTH]: "给自己留出不承担的时间",
+        [E.METAL]: "完成一次明确而温和的拒绝",
+        [E.WATER]: "将一个直觉转化为小实验"
+      };
+      const extraAvoid = {
+        [E.WOOD]: "把所有新机会都当成命中注定",
+        [E.FIRE]: "以即时反馈衡量自身价值",
+        [E.EARTH]: "因责任感拒绝休息",
+        [E.METAL]: "在信息不足时作绝对判断",
+        [E.WATER]: "用反复猜测代替现实沟通"
+      };
+      const good = [...profile.good, extraGood[dominant]];
+      const avoid = [...profile.avoid, extraAvoid[dominant]];
+      $("goodList").innerHTML = good.map(item => `<li>${item}</li>`).join("");
+      $("avoidList").innerHTML = avoid.map(item => `<li>${item}</li>`).join("");
+    }
+
+    function generateReport() {
+      if (state.answers.some(answer => answer === null)) return;
+      showView("loadingView");
+      const report = calculateReport();
+      setTimeout(() => {
+        renderReport(report);
+        showView("reportView");
+      }, 1050);
+    }
+
+    $("startButton").addEventListener("click", startQuiz);
+    $("restartButton").addEventListener("click", startQuiz);
+    $("printButton").addEventListener("click", () => window.print());
+
+    $("backButton").addEventListener("click", () => {
+      if (state.current > 0) {
+        state.current -= 1;
+        renderQuestion();
+      }
+    });
+
+    $("nextButton").addEventListener("click", () => {
+      if (state.answers[state.current] === null) return;
+      if (state.current < 14) {
+        state.current += 1;
+        renderQuestion();
+      } else {
+        generateReport();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if ($("quizView").classList.contains("hidden")) return;
+      const key = event.key.toUpperCase();
+      if (["A", "B", "C", "D"].includes(key)) {
+        const index = key.charCodeAt(0) - 65;
+        if (state.questions[state.current]?.o[index]) {
+          state.answers[state.current] = index;
+          renderQuestion();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
