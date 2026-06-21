@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172f35">
-  <title>先知 · 十五问综合占测</title>
+  <title>Corgi · 十五问综合占测</title>
   <style>
     :root {
       --ink: #183239;
@@ -220,9 +220,62 @@
       font: inherit;
     }
 
-    .profile-field input:focus {
+    .profile-field select,
+    .profile-field textarea {
+      width: 100%;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--ink);
+      background: rgba(255,253,247,.78);
+      font: inherit;
+    }
+
+    .profile-field select { min-height: 48px; }
+
+    .profile-field textarea {
+      min-height: 92px;
+      padding-top: 13px;
+      resize: vertical;
+      line-height: 1.65;
+    }
+
+    .profile-field input:focus,
+    .profile-field select:focus,
+    .profile-field textarea:focus {
       outline: 3px solid rgba(167,122,52,.20);
       border-color: var(--gold);
+    }
+
+    .profile-field input:disabled {
+      color: rgba(24,50,57,.44);
+      background: rgba(24,50,57,.06);
+    }
+
+    .form-group-title {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      color: var(--gold);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .form-group-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    .field-hint {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     .profile-error {
@@ -648,6 +701,32 @@
       font-size: 12px;
     }
 
+    .query-box {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 3px solid var(--gold);
+      border-radius: 5px 14px 14px 5px;
+      color: var(--ink-soft);
+      background: rgba(167,122,52,.08);
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .source-badge {
+      display: inline-flex;
+      align-items: center;
+      margin-left: auto;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255,253,247,.60);
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
     .report-section {
       padding: 35px 0;
       border-bottom: 1px solid var(--line);
@@ -657,6 +736,7 @@
 
     .section-heading {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 13px;
       margin: 0 0 18px;
@@ -858,7 +938,7 @@
       <div class="brand-lockup">
         <div class="seal" aria-hidden="true">知</div>
         <div>
-          <p class="brand-name">先知</p>
+          <p class="brand-name">Corgi</p>
           <p class="brand-caption">综合命势占测</p>
         </div>
       </div>
@@ -882,18 +962,81 @@
             <div class="profile-field">
               <label for="birthDate">出生日期</label>
               <input id="birthDate" name="birthDate" type="date" required>
+              <p class="field-hint">请填写公历日期，用于太阳星座判定。</p>
+            </div>
+            <div class="profile-field">
+              <label for="birthCity">出生城市</label>
+              <input id="birthCity" name="birthCity" type="text" maxlength="40" placeholder="例如：浙江温州" autocomplete="address-level2" required>
+              <p class="field-hint">用于记录星盘定位；当前版本暂不计算上升星座。</p>
+            </div>
+            <div class="profile-field">
+              <label for="birthTimeAccuracy">出生时间准确度</label>
+              <select id="birthTimeAccuracy" name="birthTimeAccuracy" required>
+                <option value="exact">精确到分钟</option>
+                <option value="approx">大约时间</option>
+                <option value="morning">只知道上午</option>
+                <option value="afternoon">只知道下午</option>
+                <option value="evening">只知道晚上</option>
+                <option value="unknown">完全不知道</option>
+              </select>
             </div>
             <div class="profile-field">
               <label for="birthTime">出生时间</label>
               <input id="birthTime" name="birthTime" type="time" required>
+              <p id="birthTimeHint" class="field-hint">精确或大约时间需填写；不知道时可跳过。</p>
+            </div>
+
+            <div class="form-group-title">本轮占问 · 必填</div>
+            <div class="profile-field">
+              <label for="topic">想问的主题</label>
+              <select id="topic" name="topic" required>
+                <option value="">请选择主题</option>
+                <option value="感情">感情</option>
+                <option value="事业">事业</option>
+                <option value="财运">财运</option>
+                <option value="家庭">家庭</option>
+                <option value="学业">学业</option>
+                <option value="年度趋势">年度趋势</option>
+                <option value="综合">综合</option>
+              </select>
+            </div>
+            <div class="profile-field">
+              <label for="predictionRange">预测范围</label>
+              <select id="predictionRange" name="predictionRange" required>
+                <option value="3d">未来三天</option>
+                <option value="1m">未来一个月</option>
+                <option value="3m">未来三个月</option>
+                <option value="1y">未来一年</option>
+              </select>
             </div>
             <div class="profile-field full">
-              <label for="occupation">目前从事的工作</label>
-              <input id="occupation" name="occupation" type="text" maxlength="40" placeholder="例如：教师、设计师、自由职业" autocomplete="organization-title" required>
+              <label for="specificQuestion">具体想问什么</label>
+              <textarea id="specificQuestion" name="specificQuestion" maxlength="160" placeholder="例如：未来三个月，我现在争取的工作机会会如何发展？" required></textarea>
+            </div>
+
+            <div class="form-group-title">情境资料 · 选填</div>
+            <div class="profile-field">
+              <label for="occupation">目前从事的工作／行业</label>
+              <input id="occupation" name="occupation" type="text" maxlength="40" placeholder="例如：教师、设计师、自由职业" autocomplete="organization-title">
+            </div>
+            <div class="profile-field">
+              <label for="relationshipStatus">当前感情状态</label>
+              <select id="relationshipStatus" name="relationshipStatus">
+                <option value="">不填写</option>
+                <option value="单身">单身</option>
+                <option value="了解中">正在了解某人</option>
+                <option value="恋爱中">恋爱中</option>
+                <option value="已婚">已婚</option>
+                <option value="关系调整期">关系调整期</option>
+              </select>
+            </div>
+            <div class="profile-field full">
+              <label for="currentConcern">当前最困扰的事情</label>
+              <input id="currentConcern" name="currentConcern" type="text" maxlength="80" placeholder="例如：选择太多，不确定该优先哪一条路">
             </div>
             <div class="profile-field full">
               <label for="hobbies">主要爱好</label>
-              <input id="hobbies" name="hobbies" type="text" maxlength="60" placeholder="例如：阅读、旅行、音乐、运动" required>
+              <input id="hobbies" name="hobbies" type="text" maxlength="60" placeholder="例如：阅读、旅行、音乐、运动">
             </div>
           </div>
           <p id="profileError" class="profile-error" role="alert"></p>
@@ -943,7 +1086,7 @@
 
     <article id="reportView" class="panel report hidden" aria-live="polite">
       <header id="reportCover" class="report-cover" data-symbol="吉">
-        <div class="report-kicker">先知 · 十五问综合占测</div>
+        <div class="report-kicker">Corgi · 十五问综合占测</div>
         <h1 id="reportTitle" class="report-title">命势报告</h1>
         <p id="reportSubtitle" class="report-subtitle"></p>
         <div id="reportStamp" class="report-stamp"></div>
@@ -954,41 +1097,43 @@
           <div class="verdict-label">命势总论</div>
           <p id="verdictText" class="verdict-text"></p>
           <div id="profileSummary" class="profile-summary" aria-label="本轮资料"></div>
+          <div id="queryText" class="query-box"></div>
           <div id="elementGrid" class="element-grid" aria-label="五行气势"></div>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">一</span>命格主象</h2>
+          <h2 class="section-heading"><span class="section-number">一</span>命格主象 <span class="source-badge">依据：十五问问卷</span></h2>
           <p id="natureText" class="section-copy"></p>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">二</span>近期运程</h2>
+          <h2 class="section-heading"><span class="section-number">二</span>近期运程 <span class="source-badge">依据：问卷＋占问范围</span></h2>
           <p id="timingText" class="section-copy"></p>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">三</span>四域命势</h2>
+          <h2 class="section-heading"><span class="section-number">三</span>四域命势 <span class="source-badge">依据：十五问问卷</span></h2>
           <div id="fortuneGrid" class="fortune-grid"></div>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">四</span>转机与提醒</h2>
+          <h2 class="section-heading"><span class="section-number">四</span>转机与提醒 <span class="source-badge">依据：问卷主倾向</span></h2>
           <p id="turningText" class="section-copy"></p>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">五</span>星座映照</h2>
+          <h2 class="section-heading"><span class="section-number">五</span>星座映照 <span class="source-badge">依据：出生日期</span></h2>
           <p id="zodiacText" class="section-copy"></p>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">六</span>塔罗三牌阵</h2>
+          <h2 class="section-heading"><span class="section-number">六</span>塔罗三牌阵 <span class="source-badge">依据：具体问题＋本轮随机种子</span></h2>
+          <p id="tarotQuestion" class="section-copy" style="margin-bottom:18px"></p>
           <div id="tarotGrid" class="tarot-grid"></div>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">七</span>未来三日关键事件预测</h2>
+          <h2 class="section-heading"><span class="section-number">七</span><span id="forecastHeadingText">关键事件预测</span> <span class="source-badge">依据：各体系综合</span></h2>
           <div id="forecastGrid" class="fortune-grid"></div>
         </section>
 
@@ -1260,14 +1405,23 @@
       const profile = {
         birthDate: $("birthDate").value,
         birthTime: $("birthTime").value,
+        birthTimeAccuracy: $("birthTimeAccuracy").value,
+        birthCity: $("birthCity").value.trim(),
+        topic: $("topic").value,
+        predictionRange: $("predictionRange").value,
+        specificQuestion: $("specificQuestion").value.trim(),
         occupation: $("occupation").value.trim(),
+        relationshipStatus: $("relationshipStatus").value,
+        currentConcern: $("currentConcern").value.trim(),
         hobbies: $("hobbies").value.trim()
       };
-      if (!profile.birthDate || !profile.birthTime || !profile.occupation || !profile.hobbies) {
-        $("profileError").textContent = "请完整填写出生日期、出生时间、从事工作和爱好后再开始。";
+      const needsClockTime = ["exact", "approx"].includes(profile.birthTimeAccuracy);
+      if (!profile.birthDate || !profile.birthCity || !profile.topic || !profile.predictionRange || !profile.specificQuestion || (needsClockTime && !profile.birthTime)) {
+        $("profileError").textContent = "请完整填写出生日期、出生城市、出生时间信息、占问主题、具体问题和预测范围。";
         return null;
       }
-      if (new Date(`${profile.birthDate}T${profile.birthTime}`) > new Date()) {
+      const comparisonTime = profile.birthTime || "00:00";
+      if (new Date(`${profile.birthDate}T${comparisonTime}`) > new Date()) {
         $("profileError").textContent = "出生日期和时间不能晚于当前时间。";
         return null;
       }
@@ -1308,6 +1462,57 @@
           reading: reversed ? card.shadow : card.light
         };
       });
+    }
+
+    const timeAccuracyLabels = {
+      exact: "精确到分钟",
+      approx: "大约时间",
+      morning: "仅知上午",
+      afternoon: "仅知下午",
+      evening: "仅知晚上",
+      unknown: "时间未知"
+    };
+
+    const rangeProfiles = {
+      "3d": {
+        label: "未来三天",
+        heading: "未来三日关键事件预测",
+        offsets: [1, 2, 3],
+        stages: ["第一日", "第二日", "第三日"],
+        dateOptions: { month: "long", day: "numeric", weekday: "short" }
+      },
+      "1m": {
+        label: "未来一个月",
+        heading: "未来一个月关键节点预测",
+        offsets: [7, 15, 30],
+        stages: ["第一周", "月中", "月底"],
+        dateOptions: { month: "long", day: "numeric" }
+      },
+      "3m": {
+        label: "未来三个月",
+        heading: "未来三个月关键节点预测",
+        offsets: [30, 60, 90],
+        stages: ["第一个月", "第二个月", "第三个月"],
+        dateOptions: { year: "numeric", month: "long", day: "numeric" }
+      },
+      "1y": {
+        label: "未来一年",
+        heading: "未来一年关键阶段预测",
+        offsets: [90, 180, 365],
+        stages: ["第一季度", "半年附近", "一年附近"],
+        dateOptions: { year: "numeric", month: "long", day: "numeric" }
+      }
+    };
+
+    function updateBirthTimeState() {
+      const accuracy = $("birthTimeAccuracy").value;
+      const needsClockTime = ["exact", "approx"].includes(accuracy);
+      $("birthTime").disabled = !needsClockTime;
+      $("birthTime").required = needsClockTime;
+      if (!needsClockTime) $("birthTime").value = "";
+      $("birthTimeHint").textContent = needsClockTime
+        ? "请填写你知道的时间；选择“大约时间”时无需精确到分钟。"
+        : "已按时间段或未知处理，无需填写具体时间。";
     }
 
     function startQuiz() {
@@ -1366,7 +1571,12 @@
     function hashAnswers(options) {
       let hash = state.seed >>> 0;
       const profileText = state.profile
-        ? `${state.profile.birthDate}|${state.profile.birthTime}|${state.profile.occupation}|${state.profile.hobbies}`
+        ? [
+            state.profile.birthDate, state.profile.birthTime, state.profile.birthTimeAccuracy,
+            state.profile.birthCity, state.profile.topic, state.profile.predictionRange,
+            state.profile.specificQuestion, state.profile.occupation, state.profile.relationshipStatus,
+            state.profile.currentConcern, state.profile.hobbies
+          ].join("|")
         : "";
       for (let i = 0; i < profileText.length; i++) {
         hash = Math.imul(hash ^ profileText.charCodeAt(i), 2654435761) >>> 0;
@@ -1429,6 +1639,7 @@
     function renderReport(report) {
       const { dominant, secondary, weakest, profile, hash, zodiac, tarot } = report;
       const zodiacProfile = zodiacProfiles[zodiac];
+      const rangeProfile = rangeProfiles[state.profile.predictionRange];
       const date = new Intl.DateTimeFormat("zh-CN", {
         year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"
       }).format(new Date());
@@ -1438,12 +1649,20 @@
       $("reportSubtitle").textContent = `${zodiac}的本轮主气为${dominant}，辅气为${secondary}，${weakest}气相对收敛。命势关键词：${choose(["开局、聚焦、回响", "取舍、沉淀、转机", "清醒、行动、落地", "边界、节奏、积累"], hash)}。`;
       $("reportStamp").textContent = `${date} · 占测编号 XZ-${String(hash).slice(-8)}`;
       $("verdictText").textContent = profile.verdict;
-      $("profileSummary").innerHTML = [
-        `出生 ${state.profile.birthDate} ${state.profile.birthTime}`,
+      const profileFacts = [
+        `出生 ${state.profile.birthDate} ${state.profile.birthTime ? `${state.profile.birthTime}（${timeAccuracyLabels[state.profile.birthTimeAccuracy]}）` : timeAccuracyLabels[state.profile.birthTimeAccuracy]}`,
+        `出生地 ${state.profile.birthCity}`,
         `星座 ${zodiac}`,
-        `工作 ${state.profile.occupation}`,
-        `爱好 ${state.profile.hobbies}`
-      ].map(item => `<span class="profile-fact">${escapeHtml(item)}</span>`).join("");
+        `主题 ${state.profile.topic}`,
+        `范围 ${rangeProfile.label}`
+      ];
+      if (state.profile.occupation) profileFacts.push(`工作 ${state.profile.occupation}`);
+      if (state.profile.relationshipStatus) profileFacts.push(`感情状态 ${state.profile.relationshipStatus}`);
+      if (state.profile.hobbies) profileFacts.push(`爱好 ${state.profile.hobbies}`);
+      $("profileSummary").innerHTML = profileFacts.map(item => `<span class="profile-fact">${escapeHtml(item)}</span>`).join("");
+      const optionalCount = [state.profile.occupation, state.profile.relationshipStatus, state.profile.currentConcern, state.profile.hobbies].filter(Boolean).length;
+      const concernContext = state.profile.currentConcern ? ` 当前困扰：“${state.profile.currentConcern}”。` : "";
+      $("queryText").textContent = `本轮占问：“${state.profile.specificQuestion}”${concernContext} 观察范围：${rangeProfile.label}。个性化资料层级：${optionalCount >= 3 ? "丰富" : optionalCount >= 1 ? "适中" : "基础"}。资料丰富度只影响表达和情境匹配，不代表预测准确率。`;
 
       const elementOrder = [E.WOOD, E.FIRE, E.EARTH, E.METAL, E.WATER];
       $("elementGrid").innerHTML = elementOrder.map(element => `
@@ -1454,9 +1673,12 @@
       `).join("");
 
       $("natureText").textContent = `${profile.nature} 辅气属${secondary}，说明你并非只靠一种力量前行：${secondary}气会在关键阶段帮助主气完成落地。相对较弱的${weakest}气，则提示你近期需要主动补足与它相关的品质，而不是把短板视作宿命。`;
-      $("timingText").textContent = timingTemplates[dominant].replace("{secondary}", secondary);
+      $("timingText").textContent = `${timingTemplates[dominant].replace("{secondary}", secondary)} 本轮将重点观察“${state.profile.topic}”在${rangeProfile.label}内的变化。`;
       $("turningText").textContent = turningTemplates[report.topTone] || turningTemplates.steady;
-      $("zodiacText").textContent = `你的太阳星座是${zodiac}，属于${zodiacProfile.element}象星座，守护星为${zodiacProfile.ruler}。它象征${zodiacProfile.trait}。结合本轮${dominant}旺、${secondary}辅的走势，你在“${state.profile.occupation}”相关事务中，更适合把${zodiac}的天赋用于聚焦与推进；你对“${state.profile.hobbies}”的兴趣也可能成为恢复能量、连接新机会的入口。近期星座提醒：${zodiacProfile.advice}。`;
+      const occupationContext = state.profile.occupation ? `在“${state.profile.occupation}”相关事务中，` : "在现实事务中，";
+      const hobbyContext = state.profile.hobbies ? `你对“${state.profile.hobbies}”的兴趣也可能成为恢复能量、连接新机会的入口。` : "";
+      $("zodiacText").textContent = `你的太阳星座是${zodiac}，属于${zodiacProfile.element}象星座，守护星为${zodiacProfile.ruler}。它象征${zodiacProfile.trait}。结合本轮${dominant}旺、${secondary}辅的走势，${occupationContext}更适合把${zodiac}的天赋用于聚焦与推进。${hobbyContext}近期星座提醒：${zodiacProfile.advice}。当前版本按太阳星座解读，出生城市尚未用于上升星座或完整星盘计算。`;
+      $("tarotQuestion").textContent = `本牌阵围绕你的问题展开：“${state.profile.specificQuestion}”`;
       $("tarotGrid").innerHTML = tarot.map(card => `
         <section class="tarot-card" data-glyph="${card.glyph}">
           <div class="tarot-position">${card.position}</div>
@@ -1484,8 +1706,8 @@
 
       const forecastElements = [dominant, secondary, dominant];
       const usedForecasts = new Set();
-      const dayNames = ["第一日", "第二日", "第三日"];
-      const dayFormat = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric", weekday: "short" });
+      $("forecastHeadingText").textContent = rangeProfile.heading;
+      const dayFormat = new Intl.DateTimeFormat("zh-CN", rangeProfile.dateOptions);
       const forecasts = forecastElements.map((element, index) => {
         const pool = eventForecasts[element];
         let choiceIndex = (hash + index * 7 + report.scores[element]) % pool.length;
@@ -1496,11 +1718,11 @@
         }
         usedForecasts.add(key);
         const date = new Date();
-        date.setDate(date.getDate() + index + 1);
+        date.setDate(date.getDate() + rangeProfile.offsets[index]);
         return {
           ...pool[choiceIndex],
           date: dayFormat.format(date),
-          dayName: dayNames[index],
+          dayName: rangeProfile.stages[index],
           probability: 66 + ((hash >>> (index * 5)) % 24)
         };
       });
@@ -1558,7 +1780,12 @@
       state.profile = null;
       state.questions = [];
       state.answers = [];
-      ["birthDate", "birthTime", "occupation", "hobbies"].forEach(id => { $(id).value = ""; });
+      ["birthDate", "birthTime", "birthCity", "specificQuestion", "occupation", "currentConcern", "hobbies"].forEach(id => { $(id).value = ""; });
+      $("birthTimeAccuracy").value = "exact";
+      $("topic").value = "";
+      $("predictionRange").value = "3d";
+      $("relationshipStatus").value = "";
+      updateBirthTimeState();
       $("profileError").textContent = "";
       showView("startView");
     });
@@ -1570,6 +1797,8 @@
       String(now.getMonth() + 1).padStart(2, "0"),
       String(now.getDate()).padStart(2, "0")
     ].join("-");
+    $("birthTimeAccuracy").addEventListener("change", updateBirthTimeState);
+    updateBirthTimeState();
 
     $("backButton").addEventListener("click", () => {
       if (state.current > 0) {
