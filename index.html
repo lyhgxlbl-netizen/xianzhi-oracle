@@ -184,6 +184,62 @@
       background: rgba(245, 240, 229, .68);
     }
 
+    .profile-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .profile-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .profile-field.full { grid-column: 1 / -1; }
+
+    .profile-field label {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .profile-field input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--ink);
+      background: rgba(255,253,247,.78);
+      font: inherit;
+    }
+
+    .profile-field input:focus {
+      outline: 3px solid rgba(167,122,52,.20);
+      border-color: var(--gold);
+    }
+
+    .profile-error {
+      min-height: 20px;
+      margin: 0;
+      color: var(--red);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .privacy-note {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
     .primary-button,
     .secondary-button {
       min-height: 52px;
@@ -576,6 +632,22 @@
       font-size: 12px;
     }
 
+    .profile-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 22px 0 0;
+    }
+
+    .profile-fact {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(245,240,229,.62);
+      font-size: 12px;
+    }
+
     .report-section {
       padding: 35px 0;
       border-bottom: 1px solid var(--line);
@@ -647,6 +719,65 @@
       font-weight: 700;
     }
 
+    .tarot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .tarot-card {
+      min-height: 300px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(167,122,52,.30);
+      border-radius: 20px;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 50% 22%, rgba(217,189,128,.19), transparent 30%),
+        linear-gradient(155deg, #294b50, #142d33 72%);
+    }
+
+    .tarot-card::after {
+      content: attr(data-glyph);
+      position: absolute;
+      right: -4px;
+      bottom: -24px;
+      color: rgba(217,189,128,.10);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 128px;
+      line-height: 1;
+    }
+
+    .tarot-position,
+    .tarot-orientation {
+      position: relative;
+      z-index: 1;
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+
+    .tarot-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 12px;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 24px;
+    }
+
+    .tarot-card p {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 14px;
+      color: rgba(255,253,247,.76);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .tarot-orientation { margin-top: 16px; }
+
     .advice-columns {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -697,6 +828,8 @@
       .hero-copy { padding: 42px 28px; }
       .hero-oracle { min-height: 310px; }
       .oracle-symbol { font-size: 88px; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .profile-field.full { grid-column: auto; }
       .quiz-head { padding: 21px 22px 18px; }
       .question-title { min-height: 130px; }
       .quiz-actions { padding-bottom: 30px; }
@@ -705,7 +838,7 @@
       .element-grid { grid-template-columns: repeat(5, minmax(52px, 1fr)); gap: 6px; }
       .element { padding: 12px 4px; }
       .element-name { font-size: 18px; }
-      .fortune-grid, .advice-columns { grid-template-columns: 1fr; }
+      .fortune-grid, .tarot-grid, .advice-columns { grid-template-columns: 1fr; }
       .report-actions { flex-direction: column; }
     }
 
@@ -742,11 +875,31 @@
         <div class="hero-notes" aria-label="占测特点">
           <span class="hero-note">每次题目不同</span>
           <span class="hero-note">约 3 分钟</span>
-          <span class="hero-note">即时生成结论</span>
+          <span class="hero-note">含星座与塔罗</span>
         </div>
-        <div>
-          <button id="startButton" class="primary-button" type="button">开始占测</button>
-        </div>
+        <form id="profileForm" class="profile-form">
+          <div class="profile-grid">
+            <div class="profile-field">
+              <label for="birthDate">出生日期</label>
+              <input id="birthDate" name="birthDate" type="date" required>
+            </div>
+            <div class="profile-field">
+              <label for="birthTime">出生时间</label>
+              <input id="birthTime" name="birthTime" type="time" required>
+            </div>
+            <div class="profile-field full">
+              <label for="occupation">目前从事的工作</label>
+              <input id="occupation" name="occupation" type="text" maxlength="40" placeholder="例如：教师、设计师、自由职业" autocomplete="organization-title" required>
+            </div>
+            <div class="profile-field full">
+              <label for="hobbies">主要爱好</label>
+              <input id="hobbies" name="hobbies" type="text" maxlength="60" placeholder="例如：阅读、旅行、音乐、运动" required>
+            </div>
+          </div>
+          <p id="profileError" class="profile-error" role="alert"></p>
+          <button id="startButton" class="primary-button" type="submit">填写资料并开始占测</button>
+          <p class="privacy-note">资料仅在当前浏览器中用于生成本轮结果，不会上传或保存到服务器。</p>
+        </form>
         <p class="disclaimer">本占测用于传统文化娱乐与自我观察。关于医疗、投资或法律的重要决定，请以现实证据和专业意见为准。</p>
       </div>
       <div class="hero-oracle" aria-hidden="true">
@@ -800,6 +953,7 @@
         <section class="verdict">
           <div class="verdict-label">命势总论</div>
           <p id="verdictText" class="verdict-text"></p>
+          <div id="profileSummary" class="profile-summary" aria-label="本轮资料"></div>
           <div id="elementGrid" class="element-grid" aria-label="五行气势"></div>
         </section>
 
@@ -824,12 +978,22 @@
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">五</span>未来三日关键事件预测</h2>
+          <h2 class="section-heading"><span class="section-number">五</span>星座映照</h2>
+          <p id="zodiacText" class="section-copy"></p>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">六</span>塔罗三牌阵</h2>
+          <div id="tarotGrid" class="tarot-grid"></div>
+        </section>
+
+        <section class="report-section">
+          <h2 class="section-heading"><span class="section-number">七</span>未来三日关键事件预测</h2>
           <div id="forecastGrid" class="fortune-grid"></div>
         </section>
 
         <section class="report-section">
-          <h2 class="section-heading"><span class="section-number">六</span>今日宜忌</h2>
+          <h2 class="section-heading"><span class="section-number">八</span>今日宜忌</h2>
           <div class="advice-columns">
             <div class="advice-box good">
               <h3>宜</h3>
@@ -996,6 +1160,46 @@
       burdened: "当前阻力是承担过多。你需要区分责任、情分和习惯，不再替别人完成他们应当承担的部分。"
     };
 
+    const zodiacProfiles = {
+      "白羊座": { element: "火", ruler: "火星", trait: "主动、直接、敢于开局", advice: "先行动，再在途中校准方向" },
+      "金牛座": { element: "土", ruler: "金星", trait: "稳定、务实、重视感受", advice: "守住长期价值，也给变化留出入口" },
+      "双子座": { element: "风", ruler: "水星", trait: "好奇、灵活、善于连接", advice: "把分散的信息收拢成一个可执行重点" },
+      "巨蟹座": { element: "水", ruler: "月亮", trait: "敏锐、顾家、重视安全感", advice: "照顾他人之前，也要确认自己的真实需要" },
+      "狮子座": { element: "火", ruler: "太阳", trait: "热情、自信、具有表现力", advice: "让光芒服务于持续创造，而非即时认可" },
+      "处女座": { element: "土", ruler: "水星", trait: "细致、理性、善于改进", advice: "允许事情先完成，再逐步接近完美" },
+      "天秤座": { element: "风", ruler: "金星", trait: "协调、审美、重视公平", advice: "别让维持平衡延迟了必要的选择" },
+      "天蝎座": { element: "水", ruler: "冥王星", trait: "深刻、专注、洞察力强", advice: "用坦率沟通代替反复试探和猜测" },
+      "射手座": { element: "火", ruler: "木星", trait: "乐观、探索、追求自由", advice: "把远方的愿景落实为眼前的一步" },
+      "摩羯座": { element: "土", ruler: "土星", trait: "自律、负责、重视成果", advice: "稳定推进的同时，不要把休息视为退步" },
+      "水瓶座": { element: "风", ruler: "天王星", trait: "独立、创新、重视理念", advice: "让独特想法通过现实协作真正落地" },
+      "双鱼座": { element: "水", ruler: "海王星", trait: "共情、想象、直觉丰富", advice: "相信感受，同时用边界保护自己的能量" }
+    };
+
+    const majorArcana = [
+      { number: "0", name: "愚人", en: "The Fool", glyph: "启", light: "新的旅程与未知机会正在靠近，保持开放会看见意外入口。", shadow: "容易因理想化或准备不足而忽略现实代价。", advice: "允许尝试，但先设定一个安全边界。" },
+      { number: "I", name: "魔术师", en: "The Magician", glyph: "创", light: "你已有启动局面的资源，关键是集中意志并主动运用。", shadow: "能力分散，或过度依赖技巧而忽略真实目的。", advice: "选定一个目标，把手上资源组合起来。" },
+      { number: "II", name: "女祭司", en: "The High Priestess", glyph: "察", light: "答案正在内心成形，安静观察比仓促表态更有利。", shadow: "沉默与猜测可能让信息停留在迷雾中。", advice: "记录直觉，并寻找一个现实证据验证。" },
+      { number: "III", name: "皇后", en: "The Empress", glyph: "丰", light: "创造力、关系滋养和现实丰盛正在增长。", shadow: "过度付出或沉溺舒适，可能消耗自身节奏。", advice: "照料真正值得长期培育的人与事。" },
+      { number: "IV", name: "皇帝", en: "The Emperor", glyph: "序", light: "秩序、责任和清晰规则能帮你稳住局面。", shadow: "控制过强或过度坚持原计划，会压缩新可能。", advice: "立好边界，也保留必要的弹性。" },
+      { number: "V", name: "教皇", en: "The Hierophant", glyph: "承", light: "传统经验、导师或可靠体系会提供帮助。", shadow: "盲从惯例可能让你忽略自己的真实判断。", advice: "借鉴成熟方法，但保留独立选择。" },
+      { number: "VI", name: "恋人", en: "The Lovers", glyph: "合", light: "关系、价值与选择正在要求更真诚的一致。", shadow: "犹豫或迎合他人，会让重要决定失去中心。", advice: "选择与你长期价值相符的方向。" },
+      { number: "VII", name: "战车", en: "The Chariot", glyph: "进", light: "意志与行动正在汇聚，适合主动推进关键目标。", shadow: "急于获胜可能造成内耗、冲突或方向失控。", advice: "保持速度，但定期确认自己仍在正确道路上。" },
+      { number: "VIII", name: "力量", en: "Strength", glyph: "韧", light: "温和的坚定比强硬更有力量，你能驾驭复杂情绪。", shadow: "压抑真实感受或自我怀疑，会削弱持续行动。", advice: "先安顿情绪，再处理外部问题。" },
+      { number: "IX", name: "隐者", en: "The Hermit", glyph: "寻", light: "独处、研究和内省将带来关键答案。", shadow: "过度封闭可能把谨慎变成与机会断联。", advice: "保留安静，也与可信之人交换信息。" },
+      { number: "X", name: "命运之轮", en: "Wheel of Fortune", glyph: "转", light: "周期正在转动，偶然变化可能带来新的位置。", shadow: "若只等待运气，机会可能迅速经过。", advice: "识别变化信号，在窗口出现时及时回应。" },
+      { number: "XI", name: "正义", en: "Justice", glyph: "衡", light: "事实、责任与公平会让局面得到清晰裁定。", shadow: "过度评判或只讲道理，可能忽略情境与感受。", advice: "核对信息，并为自己的选择承担后果。" },
+      { number: "XII", name: "倒吊人", en: "The Hanged Man", glyph: "换", light: "暂停并转换视角，会发现此前看不见的解法。", shadow: "拖延、牺牲过多或被动等待会消耗能量。", advice: "给暂停设定期限，并明确它服务于什么。" },
+      { number: "XIII", name: "死神", en: "Death", glyph: "蜕", light: "旧阶段需要结束，清理之后将出现真正的新生。", shadow: "抗拒变化会让已经完成的事继续占据空间。", advice: "主动告别不再适合的模式。" },
+      { number: "XIV", name: "节制", en: "Temperance", glyph: "融", light: "不同力量正在调和，耐心配比会形成稳定进展。", shadow: "节奏失衡或过度迁就，使能量难以集中。", advice: "减少极端做法，建立可持续的日常节奏。" },
+      { number: "XV", name: "恶魔", en: "The Devil", glyph: "缚", light: "你正在看见欲望、依赖或利益关系的真实力量。", shadow: "习惯、恐惧或即时诱惑可能形成隐形束缚。", advice: "说出自己真正被什么牵制，并减少一次重复消耗。" },
+      { number: "XVI", name: "高塔", en: "The Tower", glyph: "破", light: "突如其来的真相会打破虚假稳定，也释放被困能量。", shadow: "抗拒事实或继续维持脆弱结构，会扩大震荡。", advice: "先保护核心，再重建真正可靠的部分。" },
+      { number: "XVII", name: "星星", en: "The Star", glyph: "愿", light: "希望、疗愈与长期愿景正在重新点亮。", shadow: "理想过远或信心不足，会让愿景停留在想象。", advice: "为真正想要的未来完成一个小行动。" },
+      { number: "XVIII", name: "月亮", en: "The Moon", glyph: "影", light: "潜意识与直觉正在提供丰富线索，需要耐心辨认。", shadow: "焦虑、投射和信息不全容易制造误判。", advice: "暂缓绝对结论，先查证最关键的一项事实。" },
+      { number: "XIX", name: "太阳", en: "The Sun", glyph: "明", light: "清晰、活力与认可增强，适合坦率表达和公开行动。", shadow: "过度乐观或只追求被看见，可能忽略细节。", advice: "分享成果，也检查承诺能否持续兑现。" },
+      { number: "XX", name: "审判", en: "Judgement", glyph: "醒", light: "过去经验正在汇成一次觉醒与重新选择。", shadow: "自责或害怕评价，会阻碍你回应真正召唤。", advice: "从旧经验中提炼意义，然后作出新的决定。" },
+      { number: "XXI", name: "世界", en: "The World", glyph: "成", light: "一个周期趋于完成，整合成果后可进入更大舞台。", shadow: "最后一步的犹豫或细节遗漏，可能延迟收尾。", advice: "完成闭环、庆祝成果，再开启下一阶段。" }
+    ];
+
     const eventForecasts = {
       [E.WOOD]: [
         { domain: "消息与机会", event: "一条新消息、临时邀请或陌生人的联系，会打开原本没有考虑过的路径。", sign: "同一主题在一天内重复出现两次，或有人主动询问你的计划。", action: "先了解细节，不必立刻承诺；记录其中最具长期价值的一项。" },
@@ -1028,7 +1232,8 @@
       questions: [],
       answers: [],
       current: 0,
-      seed: 0
+      seed: 0,
+      profile: null
     };
 
     const $ = (id) => document.getElementById(id);
@@ -1051,7 +1256,62 @@
       return copy;
     }
 
+    function collectProfile() {
+      const profile = {
+        birthDate: $("birthDate").value,
+        birthTime: $("birthTime").value,
+        occupation: $("occupation").value.trim(),
+        hobbies: $("hobbies").value.trim()
+      };
+      if (!profile.birthDate || !profile.birthTime || !profile.occupation || !profile.hobbies) {
+        $("profileError").textContent = "请完整填写出生日期、出生时间、从事工作和爱好后再开始。";
+        return null;
+      }
+      if (new Date(`${profile.birthDate}T${profile.birthTime}`) > new Date()) {
+        $("profileError").textContent = "出生日期和时间不能晚于当前时间。";
+        return null;
+      }
+      $("profileError").textContent = "";
+      state.profile = profile;
+      return profile;
+    }
+
+    function getZodiac(dateString) {
+      const [, monthText, dayText] = dateString.split("-");
+      const month = Number(monthText);
+      const day = Number(dayText);
+      const boundary = [
+        [1, 20, "摩羯座", "水瓶座"], [2, 19, "水瓶座", "双鱼座"],
+        [3, 21, "双鱼座", "白羊座"], [4, 20, "白羊座", "金牛座"],
+        [5, 21, "金牛座", "双子座"], [6, 22, "双子座", "巨蟹座"],
+        [7, 23, "巨蟹座", "狮子座"], [8, 23, "狮子座", "处女座"],
+        [9, 23, "处女座", "天秤座"], [10, 24, "天秤座", "天蝎座"],
+        [11, 23, "天蝎座", "射手座"], [12, 22, "射手座", "摩羯座"]
+      ];
+      const item = boundary[month - 1];
+      return day < item[1] ? item[2] : item[3];
+    }
+
+    function drawTarot(hash) {
+      const positions = ["当前主象", "潜在阻力", "行动指引"];
+      const used = new Set();
+      return positions.map((position, index) => {
+        let cardIndex = (hash + index * 2654435761) % majorArcana.length;
+        while (used.has(cardIndex)) cardIndex = (cardIndex + 1) % majorArcana.length;
+        used.add(cardIndex);
+        const card = majorArcana[cardIndex];
+        const reversed = ((hash >>> (index * 7)) & 1) === 1;
+        return {
+          ...card,
+          position,
+          reversed,
+          reading: reversed ? card.shadow : card.light
+        };
+      });
+    }
+
     function startQuiz() {
+      if (!state.profile && !collectProfile()) return;
       state.questions = shuffle(questionBank).slice(0, 15).map(item => ({
         q: item.q,
         o: shuffle(item.o)
@@ -1105,6 +1365,12 @@
 
     function hashAnswers(options) {
       let hash = state.seed >>> 0;
+      const profileText = state.profile
+        ? `${state.profile.birthDate}|${state.profile.birthTime}|${state.profile.occupation}|${state.profile.hobbies}`
+        : "";
+      for (let i = 0; i < profileText.length; i++) {
+        hash = Math.imul(hash ^ profileText.charCodeAt(i), 2654435761) >>> 0;
+      }
       options.forEach((option, i) => {
         const text = `${option.element}-${option.tone}-${i}`;
         for (let j = 0; j < text.length; j++) {
@@ -1149,6 +1415,8 @@
         topTone,
         phase,
         profile,
+        zodiac: getZodiac(state.profile.birthDate),
+        tarot: drawTarot(hash),
         domainScores: {
           love: 62 + (hash % 24),
           career: 64 + ((hash >>> 4) % 23),
@@ -1159,16 +1427,23 @@
     }
 
     function renderReport(report) {
-      const { dominant, secondary, weakest, profile, hash } = report;
+      const { dominant, secondary, weakest, profile, hash, zodiac, tarot } = report;
+      const zodiacProfile = zodiacProfiles[zodiac];
       const date = new Intl.DateTimeFormat("zh-CN", {
         year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"
       }).format(new Date());
 
       $("reportCover").dataset.symbol = profile.symbol;
       $("reportTitle").textContent = `${profile.title} · ${report.phase}`;
-      $("reportSubtitle").textContent = `本轮主气为${dominant}，辅气为${secondary}，${weakest}气相对收敛。命势关键词：${choose(["开局、聚焦、回响", "取舍、沉淀、转机", "清醒、行动、落地", "边界、节奏、积累"], hash)}。`;
+      $("reportSubtitle").textContent = `${zodiac}的本轮主气为${dominant}，辅气为${secondary}，${weakest}气相对收敛。命势关键词：${choose(["开局、聚焦、回响", "取舍、沉淀、转机", "清醒、行动、落地", "边界、节奏、积累"], hash)}。`;
       $("reportStamp").textContent = `${date} · 占测编号 XZ-${String(hash).slice(-8)}`;
       $("verdictText").textContent = profile.verdict;
+      $("profileSummary").innerHTML = [
+        `出生 ${state.profile.birthDate} ${state.profile.birthTime}`,
+        `星座 ${zodiac}`,
+        `工作 ${state.profile.occupation}`,
+        `爱好 ${state.profile.hobbies}`
+      ].map(item => `<span class="profile-fact">${escapeHtml(item)}</span>`).join("");
 
       const elementOrder = [E.WOOD, E.FIRE, E.EARTH, E.METAL, E.WATER];
       $("elementGrid").innerHTML = elementOrder.map(element => `
@@ -1181,6 +1456,17 @@
       $("natureText").textContent = `${profile.nature} 辅气属${secondary}，说明你并非只靠一种力量前行：${secondary}气会在关键阶段帮助主气完成落地。相对较弱的${weakest}气，则提示你近期需要主动补足与它相关的品质，而不是把短板视作宿命。`;
       $("timingText").textContent = timingTemplates[dominant].replace("{secondary}", secondary);
       $("turningText").textContent = turningTemplates[report.topTone] || turningTemplates.steady;
+      $("zodiacText").textContent = `你的太阳星座是${zodiac}，属于${zodiacProfile.element}象星座，守护星为${zodiacProfile.ruler}。它象征${zodiacProfile.trait}。结合本轮${dominant}旺、${secondary}辅的走势，你在“${state.profile.occupation}”相关事务中，更适合把${zodiac}的天赋用于聚焦与推进；你对“${state.profile.hobbies}”的兴趣也可能成为恢复能量、连接新机会的入口。近期星座提醒：${zodiacProfile.advice}。`;
+      $("tarotGrid").innerHTML = tarot.map(card => `
+        <section class="tarot-card" data-glyph="${card.glyph}">
+          <div class="tarot-position">${card.position}</div>
+          <h3>${card.number} · ${card.name}</h3>
+          <p>${card.en}</p>
+          <p>${card.reading}</p>
+          <p><strong>牌面建议：</strong>${card.advice}</p>
+          <div class="tarot-orientation">${card.reversed ? "逆位 REVERSED" : "正位 UPRIGHT"}</div>
+        </section>
+      `).join("");
 
       const cards = [
         ["感情", domainCopy.love[dominant], report.domainScores.love],
@@ -1248,6 +1534,12 @@
       $("avoidList").innerHTML = avoid.map(item => `<li>${item}</li>`).join("");
     }
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[character]);
+    }
+
     function generateReport() {
       if (state.answers.some(answer => answer === null)) return;
       showView("loadingView");
@@ -1258,9 +1550,26 @@
       }, 1050);
     }
 
-    $("startButton").addEventListener("click", startQuiz);
-    $("restartButton").addEventListener("click", startQuiz);
+    $("profileForm").addEventListener("submit", event => {
+      event.preventDefault();
+      if (collectProfile()) startQuiz();
+    });
+    $("restartButton").addEventListener("click", () => {
+      state.profile = null;
+      state.questions = [];
+      state.answers = [];
+      ["birthDate", "birthTime", "occupation", "hobbies"].forEach(id => { $(id).value = ""; });
+      $("profileError").textContent = "";
+      showView("startView");
+    });
     $("printButton").addEventListener("click", () => window.print());
+
+    const now = new Date();
+    $("birthDate").max = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
 
     $("backButton").addEventListener("click", () => {
       if (state.current > 0) {
